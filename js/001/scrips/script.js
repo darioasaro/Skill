@@ -104,13 +104,17 @@ var cuentas
 function setearDatosCuentas(datos) {
     cuentas = datos;
     console.log(cuentas)
+
 }
 function errorLeerJson(error) {
     console.error("no se encuentra el archivo json")
     console.log(error);
 }
 
-readJson().then( setearDatosCuentas, errorLeerJson )
+readJson().then( (data) => {
+    setearDatosCuentas(data);
+    // leerDatos(datos)
+}), errorLeerJson )
 
 
 
