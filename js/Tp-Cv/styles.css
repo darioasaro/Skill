@@ -1,0 +1,30 @@
+.titleCv{
+    background-color: rgb(17, 236, 200);
+}
+.centerText{
+    text-align: center;
+}
+.left{
+    float: left;
+    margin-top: inherit;
+    width: 39%;
+}
+.right{
+    float: right;
+    width: 60%;
+    margin-top: inherit;
+    border: 2px solid #0f0e0e;
+    border-radius:10px;
+    margin-bottom: inherit;
+}
+.spaceLeft{
+    margin-left: 2%;
+}
+.sinPunto{
+    list-style: none;
+}
+.body{
+   
+    
+
+}
