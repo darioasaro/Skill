@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import List from './components/List';
 import Form from './components/Form';
 import { getTodos } from './services/todos'
+import ListsContainer from './components/ListContainer';
 
 const App = () => {
   
@@ -52,9 +52,6 @@ const App = () => {
   const editTask = ( task ) => {
     setForm( task )
   }
-  const pendingTasks = () => {
-    return tasks.filter( ( task ) => !task.done )
-  }
   return (
     <div className="container">
       <div className="row mt-3">
@@ -65,13 +62,11 @@ const App = () => {
             form={ form }
           />
         </div>
-        <div className="col">
-          { pendingTasks().length > 0 ? 
-            <List tasksList={ pendingTasks() }
-              onChangeTaskStatus={ changeTaskStatus }
-              onEditTask={ editTask } />
-          : <h3> Muy bien!! No tienes tareas pendientes </h3> }
-        </div>
+        <ListsContainer
+          tasks={ tasks }
+          editTask={ editTask }
+          changeTaskStatus={ changeTaskStatus }
+        />
       </div>
     </div>
   );
