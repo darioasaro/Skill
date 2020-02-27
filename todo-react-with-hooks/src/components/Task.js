@@ -9,15 +9,15 @@ const Task = ( { task, onChangeState, onEditTask } ) => {
         </div>
         <div className="card-body">
           <p className="card-text">{task.description}</p>
-          <div className="row mx-auto">
-            <div className="col-sm">
+          <div className="row">
+            <div className="col-12 col-sm-6">
               <button className="btn btn-outline-success"
                 onClick={() => onChangeState()} >
                 { task.done ? "Reiniciar" : "Finalizar"}
               </button>
             </div>
-            <div className="col-sm">
-              <button className="btn btn-outline-primary" onClick={() => onEditTask()} >Editar</button>
+            <div className="col-12 col-sm-6">
+              <button className="btn btn-outline-primary float-right" onClick={() => onEditTask()} >Editar</button>
             </div>
           </div>
         </div>
