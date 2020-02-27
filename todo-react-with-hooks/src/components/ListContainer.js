@@ -28,14 +28,16 @@ const ListsContainer = ({ tasks, editTask, changeTaskStatus }) => {
           onEditTask={editTask} />
       </div>
       : null}
-    <div className="col">
-      {tasks.length > 0 ?
-        <List title="Todas"
-          tasksList={tasks}
-          onChangeTaskStatus={changeTaskStatus}
-          onEditTask={editTask} />
-        : <h3> No tienes tareas creadas </h3>}
-    </div>
+    {pendingTasks().length === tasks.length || doneTasks().length === tasks.length ? null :
+      <div className="col">
+        {tasks.length > 0 ?
+          <List title="Todas"
+            tasksList={tasks}
+            onChangeTaskStatus={changeTaskStatus}
+            onEditTask={editTask} />
+          : <h3> No tienes tareas creadas </h3>}
+      </div>
+}
   </>)
 }
 
