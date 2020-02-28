@@ -16,7 +16,7 @@ const Form = ({ onSubmit, onChange, form }) => {
             <label htmlFor="description">Descripción</label>
             <input type="text" className="form-control" name="description" value={ form.description } onChange={ onChange }></input>
           </div>
-          <button type="submit" className="btn btn-primary">Submit</button>
+          <button type="submit" className="btn btn-primary">Guardar</button>
         </form>
       </div>
     </div>
