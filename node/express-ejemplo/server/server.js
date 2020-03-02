@@ -1,30 +1,14 @@
 const express = require('express')
 const app = express()
 const port = 3000
+const routes = require( '../routes/routes' )
+const morgan = require('morgan')
 
-app.get('/', (req, res) => {
-  console.log( __dirname )
-  const persona = {
-    nombre: "leo",
-    edad: 20,
-    url: req.url
+app.use( morgan( "dev") );
+routes(app)
 
-  }
-  
-  res.json( persona )
-})
-
-app.get('/usuarios', (req, res) => {
-
-  const persona = {
-    nombre: "usuarios",
-    edad: 20,
-    url: req.url
-
-  }
-  
-  res.json( persona )
-})
-
+app.get("*", (req, res) => res.status(400).send({
+	message: "No se encuentra el recurso"
+}));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
