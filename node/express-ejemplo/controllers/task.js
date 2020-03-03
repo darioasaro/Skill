@@ -1,14 +1,13 @@
-const db = require('../config/mysql')
+const db = require("../config/mysql");
 
-exports.index = ( req, res ) => {
+exports.index = (req, res) => {
   db.connection.query(
-    'SELECT title, description, isDone FROM tasks;',
+    "SELECT id, title, description, isDone FROM tasks;",
     (err, rows, fields) => {
-      if ( err ) console.log(err)
-      console.log(rows);
-      console.log(fields);
+      if (err) console.log(err);
       res.json(rows);
-    });
+    }
+  );
 
   // tasks = [{
   //   name: "task 1",
@@ -20,23 +19,32 @@ exports.index = ( req, res ) => {
   // }]
 
   // res.json( {'tasks': tasks} )
-}
+};
 
-
-exports.show = ( req, res ) => {
+exports.show = (req, res) => {
   tasks = {
-    name: "task " + req.params.id ,
+    name: "task " + req.params.id,
     description: "description task"
+  };
+  res.json({ tasks: tasks });
+};
+
+exports.store = (req, res) => {
+  const { title, description, isDone = false } = req.body;
+  if (title && description) {
+    db.connection.query(
+      `INSERT INTO tasks ( title, description, isDone ) 
+      VALUES ('${title}', '${description}', ${isDone})`,
+      (err, row) => {
+        if (err) {
+          res
+            .status(500)
+            .json({ message: "Error al insertar los datos: " + err });
+          throw err;
+        }
+        console.log(row);
+        res.json({ message: `tarea creada con id  ${row.insertId}`});
+      }
+    );
   }
-  res.json( {'tasks': tasks} )
-}
-
-
-exports.store = ( req, res ) => {
-  tasks = {
-    name: "task ",
-    description: "description task"
-  }
-  res.json( {'tasks': tasks} )
-}
-
+};
