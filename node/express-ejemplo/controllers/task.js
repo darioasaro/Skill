@@ -1,14 +1,25 @@
+const db = require('../config/mysql')
 
 exports.index = ( req, res ) => {
-  tasks = [{
-    name: "task 1",
-    description: "description task"
-  },
-  {
-    name: "task 2",
-    description: "description task"
-  }]
-  res.json( {'tasks': tasks} )
+  db.connection.query(
+    'SELECT title, description, isDone FROM tasks;',
+    (err, rows, fields) => {
+      if ( err ) console.log(err)
+      console.log(rows);
+      console.log(fields);
+      res.json(rows);
+    });
+
+  // tasks = [{
+  //   name: "task 1",
+  //   description: "description task"
+  // },
+  // {
+  //   name: "task 2",
+  //   description: "description task"
+  // }]
+
+  // res.json( {'tasks': tasks} )
 }
 
 

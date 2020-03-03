@@ -3,10 +3,11 @@ const app = express()
 const port = 3000
 const routes = require( '../routes/routes' )
 const morgan = require('morgan')
+require('dotenv').config()
 
 app.use( morgan( "dev") );
 routes(app)
-
+console.log(process.env.DB_USER);
 app.get("*", (req, res) => res.status(400).send({
 	message: "No se encuentra el recurso"
 }));
