@@ -1,27 +1,29 @@
 const db = require("../config/mysql");
 
-exports.index = (req, res) => {
-  db.connection.query(
-    "SELECT id, title, description, isDone FROM tasks;",
-    (err, rows, fields) => {
-      if (err) console.log(err);
-      res.json(rows);
+export const index = (req, res) => {
+  let sql = "SELECT id, title, description, isDone FROM tasks";
+  if (req.query.status) {
+    switch (req.query.status) {
+      case "todo":
+        sql = sql + " WHERE isDone = 0";
+        break;
+
+      case "done":
+        sql = sql + " WHERE isDone = 1";
+        break;
+
+      default:
+        break;
     }
-  );
+  }
 
-  // tasks = [{
-  //   name: "task 1",
-  //   description: "description task"
-  // },
-  // {
-  //   name: "task 2",
-  //   description: "description task"
-  // }]
-
-  // res.json( {'tasks': tasks} )
+  db.connection.query(sql, (err, rows, fields) => {
+    if (err) console.log(err);
+    res.json(rows);
+  });
 };
 
-exports.show = (req, res) => {
+export const show = (req, res) => {
   tasks = {
     name: "task " + req.params.id,
     description: "description task"
@@ -29,7 +31,7 @@ exports.show = (req, res) => {
   res.json({ tasks: tasks });
 };
 
-exports.store = (req, res) => {
+export const store = (req, res) => {
   const { title, description, isDone = false } = req.body;
   if (title && description) {
     db.connection.query(
@@ -43,7 +45,7 @@ exports.store = (req, res) => {
           throw err;
         }
         console.log(row);
-        res.json({ message: `tarea creada con id  ${row.insertId}`});
+        res.json({ message: `tarea creada con id  ${row.insertId}` });
       }
     );
   }
