@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Form from './components/Form';
-import { getTodos } from './services/todos'
+import { getTodos, saveTask,updateStatus } from './services/todos'
 import ListsContainer from './components/ListContainer';
 import CustomModal from './components/common/CustomModal'
 import useModalWithData from './hooks/useModalWithData'
@@ -9,10 +9,11 @@ import useModalWithData from './hooks/useModalWithData'
 const App = () => {
 
   const initialFormState = {
-    name: "",
-    description: ""
+    titulo: "",
+    descripcion: ""
   }
   const [tasks, setTasks] = useState([])
+  const [update, setUpdate] = useState(false)
   const [form, setForm] = useState(initialFormState)
   const [setIsModalOpened, isModalOpened, modalData, setModalData] = useModalWithData()
 
@@ -29,33 +30,38 @@ const App = () => {
   }
   const handleSubmit = e => {
     e.preventDefault()
-    const { name, description } = form
-    if (form.id) {
-      const newTasks = tasks.map(task => task.id === form.id ? form : task)
-      setTasks(newTasks)
-      setIsModalOpened(false)
+    const { titulo, descripcion } = form
+    const task = {
+      titulo,
+      descripcion
     }
-    else if (name && description) {
-      const task = {
-        name,
-        description
-      }
-      task.id = tasks[tasks.length - 1].id + 1
-      setTasks([...tasks, task])
+    
+    // *OLD UPDATE*
+    //if (form.id) {
+    //   const newTasks = tasks.map(task => task.id === form.id ? form : task)
+    //   setTasks(newTasks)
+    //   saveTask(task)
+    //   setIsModalOpened(false)
+    // }
+    
+     
+      saveTask(task)
       setIsModalOpened(false)
-    }
+      getTodos().then(data => setTasks(data))
   }
   useEffect(() => {
     getTodos().then(data => setTasks(data))
   }, [])
 
-  const changeTaskStatus = (task) => {
-    const taskUpdated = tasks.map(taskEl => {
-      if (taskEl.id === task.id)
-        taskEl.done = !taskEl.done
-      return taskEl
-    })
-    setTasks(taskUpdated)
+  const changeTaskStatus = async (task) => {
+
+    try{  
+    let result = await  updateStatus(task)
+    setUpdate(!update)  
+    }
+    catch(e){
+      throw e 
+    }
   }
   const editTask = (task) => {
     setForm(task)
