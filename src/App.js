@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import Login from './components/common/Login/Login.js'
 import './App.css';
 import Form from './components/Form';
-import { getTodos, saveTask,updateStatus,updateTask } from './services/todos'
+import { getTodos, saveTask,updateStatus,updateTask,deleteTaskDb, loginUserDb } from './services/todos'
 import ListsContainer from './components/ListContainer';
 import CustomModal from './components/common/CustomModal'
 import useModalWithData from './hooks/useModalWithData'
@@ -12,7 +13,14 @@ const App = () => {
     titulo: "",
     descripcion: ""
   }
+  const initialUserState = {
+    name: "",
+    pass: ""
+  }
   const [tasks, setTasks] = useState([])
+  const [logged, setLogged] = useState(false)
+  const [user, setUser] = useState(initialUserState)
+  //const [token, setToken] = useState(null)
   const [update, setUpdate] = useState(false)
   const [form, setForm] = useState(initialFormState)
   const [setIsModalOpened, isModalOpened, modalData, setModalData] = useModalWithData()
@@ -47,11 +55,14 @@ const App = () => {
        saveTask(task)
         setIsModalOpened(false)
     }
-      getTodos().then(data => setTasks(data))
+    //setUpdate(!update) 
+    getTodos().then(data => setTasks(data))
   }
+
   useEffect(() => {
     getTodos().then(data => setTasks(data))
-  }, [])
+    
+  },[])
 
   const changeTaskStatus = async (task) => {
 
@@ -68,9 +79,28 @@ const App = () => {
     setModalData(form)
     setIsModalOpened(true)
   }
-  return (
-    <div className="container">
+  const deleteTask=(task)=>{
+   let result = deleteTaskDb(task)
+   setUpdate(!update) 
+   getTodos().then(data => setTasks(data))
+  }
+  const loginUser = (e)=>{
+     e.preventDefault()
+      loginUserDb(user)
+    setLogged(true)
 
+  }
+  const handleChangeLog = e => {
+    const value = e.target.value
+    const name = e.target.name
+
+    setUser({ ...user, [name]: value })
+  }
+  return (
+    logged ? 
+    <div className="container">
+      
+    
       <CustomModal
         isActive={isModalOpened}
         title={form.id ?? form.id > 0 ? "Editar tarea" : "Nuevo tarea"}
@@ -97,12 +127,15 @@ const App = () => {
         <ListsContainer
           tasks={tasks}
           editTask={editTask}
+          deleteTask={deleteTask}
           changeTaskStatus={changeTaskStatus}
         />
-
       </div>
     </div>
-  );
+    
+    : <Login login = {loginUser} onChange={handleChangeLog} />
+  
+    );
 }
 
 export default App;

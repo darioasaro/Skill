@@ -52,3 +52,32 @@ export const updateTask = async task => {
 
   return result;
 };
+export const deleteTaskDb = async task =>{
+  let response = await fetch("http://localhost:3000/api/tasks/" + task.id, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json"
+    },
+  });
+  let result = await response.json();
+  console.log("resultado", result);
+
+  return result;
+
+};
+
+export const loginUserDb = async user =>{
+  console.log(user);
+  
+  let response = await fetch("http://localhost:3000/api/tasks/" + user.name, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body : JSON.stringify({user:user.name,pass:user.password})
+  });
+  let result = await response.json();
+  
+
+  return result;
+};

@@ -1,6 +1,6 @@
 import React from "react"
 
-const Task = ( { task, onChangeState, onEditTask } ) => {
+const Task = ( { task, onChangeState, onEditTask,onDeleteTask } ) => {
   return (
     <>
       <div className="card mb-3">
@@ -18,6 +18,7 @@ const Task = ( { task, onChangeState, onEditTask } ) => {
             </div>
             <div className="col-12 col-sm-6">
               <button className="btn btn-outline-primary float-right" onClick={() => onEditTask()} >Editar</button>
+              <button className="btn btn-outline-primary float-right" onClick={() => onDeleteTask()} >Eliminar</button>
             </div>
           </div>
         </div>
