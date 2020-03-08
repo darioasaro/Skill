@@ -1,5 +1,5 @@
-export const getTodos = async () => {
-  let response = await fetch("http://localhost:3000/api/tasks/");
+export const getTodos = async (user) => {
+  let response = await fetch("http://localhost:3000/api/tasks/"+user.name);
   let task = await response.json();
   console.log(task);
 
@@ -30,7 +30,7 @@ export const saveTask = async task => {
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ titulo: task.titulo, descripcion: task.descripcion })
+    body: JSON.stringify({ titulo: task.titulo, descripcion: task.descripcion,user:task.user })
   });
   let result = await response.json();
   console.log("resultado", result);
@@ -67,17 +67,18 @@ export const deleteTaskDb = async task =>{
 };
 
 export const loginUserDb = async user =>{
-  console.log(user);
+ 
   
   let response = await fetch("http://localhost:3000/api/tasks/" + user.name, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body : JSON.stringify({user:user.name,pass:user.password})
+    body : JSON.stringify({user:user.name,pass:user.pass})
   });
-  let result = await response.json();
+  let result = response.json()
+  return result
   
 
-  return result;
+ 
 };

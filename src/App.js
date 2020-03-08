@@ -42,7 +42,8 @@ const App = () => {
     const task = {
       titulo,
       descripcion,
-      id
+      id,
+      user:user.name
     }
     
     
@@ -56,13 +57,13 @@ const App = () => {
         setIsModalOpened(false)
     }
     //setUpdate(!update) 
-    getTodos().then(data => setTasks(data))
+    getTodos(user).then(data => setTasks(data))
   }
 
-  useEffect(() => {
-    getTodos().then(data => setTasks(data))
+  // useEffect(() => {
+  //   getTodos().then(data => setTasks(data))
     
-  },[])
+  // },[])
 
   const changeTaskStatus = async (task) => {
 
@@ -82,12 +83,28 @@ const App = () => {
   const deleteTask=(task)=>{
    let result = deleteTaskDb(task)
    setUpdate(!update) 
-   getTodos().then(data => setTasks(data))
+   getTodos(user).then(data => setTasks(data))
   }
-  const loginUser = (e)=>{
+  const loginUser = async (e)=>{
      e.preventDefault()
-      loginUserDb(user)
-    setLogged(true)
+
+      let response = await loginUserDb(user)
+      if(response.result==true){
+        //console.log('response',response);
+        alert('Bienvenido')
+        getTodos(user).then(data => setTasks(data))
+        
+        setLogged(true)
+
+      }
+      else{
+        alert('Intente nuevamente')
+        //**PENDIENTE,HAY QUE RESETEAR EL FORMULARIO**
+        //setUser(initialUserState)
+        //setLogged(false)
+    }
+    
+      
 
   }
   const handleChangeLog = e => {

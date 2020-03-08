@@ -30,7 +30,8 @@ const ListsContainer = ({ tasks, editTask,deleteTask, changeTaskStatus }) => {
               <List title="Terminadas"
                 tasksList={doneTasks()}
                 onChangeTaskStatus={changeTaskStatus}
-                onEditTask={editTask} />
+                onEditTask={editTask}
+                onDeleteTask={deleteTask} />
             </div>
             : null}
           {pendingTasks().length === tasks.length || doneTasks().length === tasks.length ? null :
@@ -39,7 +40,8 @@ const ListsContainer = ({ tasks, editTask,deleteTask, changeTaskStatus }) => {
                 <List title="Todas"
                   tasksList={tasks}
                   onChangeTaskStatus={changeTaskStatus}
-                  onEditTask={editTask} />
+                  onEditTask={editTask} 
+                  onDeleteTask={deleteTask}/>
                 : <h3> No tienes tareas creadas </h3>}
             </div>
       }
