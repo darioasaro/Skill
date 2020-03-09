@@ -38,7 +38,7 @@ const Login = ({ login,createAccount, onChange }) => {
     <div className="container-login">
         <>
       <Form onSubmit={login}>
-          <h3>Sing In</h3>
+          <h3>Sign In</h3>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
@@ -71,7 +71,7 @@ const Login = ({ login,createAccount, onChange }) => {
       {/* //-----------------REGISTER------------------// */}
       <>
       <Form onSubmit={checkAccount}>
-        <h3>If you don't have an account,please sing up </h3>
+        <h3>If you don't have an account,please sign up </h3>
         <Form.Group >
           <Form.Label>Email address</Form.Label>
           <Form.Control onChange={onChangeNew}name="newEmail"type="email" placeholder="Enter email" />
