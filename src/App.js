@@ -99,6 +99,7 @@ const App = () => {
       else{
         alert('Intente nuevamente')
          }
+         //console.log('response',response.result)
     
       
 
