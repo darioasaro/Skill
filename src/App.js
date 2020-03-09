@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Login from './components/common/Login/Login.js'
 import './App.css';
 import Form from './components/Form';
-import { getTodos, saveTask,updateStatus,updateTask,deleteTaskDb, loginUserDb } from './services/todos'
+import { getTodos, saveTask,updateStatus,updateTask,deleteTaskDb, loginUserDb,registerUserDb } from './services/todos'
 import ListsContainer from './components/ListContainer';
 import CustomModal from './components/common/CustomModal'
 import useModalWithData from './hooks/useModalWithData'
@@ -109,6 +109,26 @@ const App = () => {
 
     setUser({ ...user, [name]: value })
   }
+  const createAccount = async (user)=>{
+
+   let result = await registerUserDb(user)
+   if(result){
+     alert("usuario creado con exito");
+     let nuevo = {
+       name:user.newEmail,
+       pass:user.newPass
+     }
+     
+     setUser(nuevo)
+     setLogged(true)
+     getTodos(user).then(data => setTasks(data))
+
+   }
+   else{
+     alert("Error al crear el usuario, intente nuevamente")
+   }
+
+  }
   return (
     logged ? 
     <div className="container">
@@ -146,7 +166,7 @@ const App = () => {
       </div>
     </div>
     
-    : <Login login = {loginUser} onChange={handleChangeLog} />
+    : <Login login = {loginUser} createAccount={createAccount}onChange={handleChangeLog} />
   
     );
 }

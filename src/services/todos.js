@@ -82,3 +82,17 @@ export const loginUserDb = async user =>{
 
  
 };
+
+export const registerUserDb = async user =>{
+  console.log(user)
+
+  let response = await fetch("http://localhost:3000/api/user/register/" + user.newEmail, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body : JSON.stringify({user:user.newEmail,pass:user.newPass})
+  });
+  let result = response.json()
+  return result
+}
