@@ -56,7 +56,7 @@ const App = () => {
        saveTask(task)
         setIsModalOpened(false)
     }
-    //setUpdate(!update) 
+    setUpdate(!update) 
     getTodos(user).then(data => setTasks(data))
   }
 
@@ -92,17 +92,13 @@ const App = () => {
       if(response.result==true){
         //console.log('response',response);
         alert('Bienvenido')
-        getTodos(user).then(data => setTasks(data))
-        
         setLogged(true)
+        getTodos(user).then(data => setTasks(data))
 
       }
       else{
         alert('Intente nuevamente')
-        //**PENDIENTE,HAY QUE RESETEAR EL FORMULARIO**
-        //setUser(initialUserState)
-        //setLogged(false)
-    }
+         }
     
       
 

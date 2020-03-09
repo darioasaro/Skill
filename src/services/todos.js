@@ -69,7 +69,7 @@ export const deleteTaskDb = async task =>{
 export const loginUserDb = async user =>{
  
   
-  let response = await fetch("http://localhost:3000/api/tasks/" + user.name, {
+  let response = await fetch("http://localhost:3000/api/user/" + user.name, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
