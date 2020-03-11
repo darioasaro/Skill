@@ -94,6 +94,7 @@ const App = () => {
         alert('Bienvenido')
         setLogged(true)
         getTodos(user).then(data => setTasks(data))
+        
 
       }
       else{
@@ -163,6 +164,7 @@ const App = () => {
           editTask={editTask}
           deleteTask={deleteTask}
           changeTaskStatus={changeTaskStatus}
+          user = {user}
         />
       </div>
     </div>

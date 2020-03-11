@@ -1,7 +1,7 @@
 import React from 'react';
 import List from './List';
 
-const ListsContainer = ({ tasks, editTask,deleteTask, changeTaskStatus }) => {
+const ListsContainer = ({ tasks, editTask,deleteTask, changeTaskStatus,user }) => {
 
   const pendingTasks = () => {
     return tasks.filter(task => !task.isDone)
@@ -22,7 +22,8 @@ const ListsContainer = ({ tasks, editTask,deleteTask, changeTaskStatus }) => {
                 tasksList={pendingTasks()}
                 onChangeTaskStatus={changeTaskStatus}
                 onEditTask={editTask} 
-                onDeleteTask={deleteTask}/>
+                onDeleteTask={deleteTask}
+                user={user}/>
               : <h3> Muy bien!! No tienes tareas pendientes </h3>}
           </div>
           {doneTasks().length > 0 ?
@@ -31,7 +32,8 @@ const ListsContainer = ({ tasks, editTask,deleteTask, changeTaskStatus }) => {
                 tasksList={doneTasks()}
                 onChangeTaskStatus={changeTaskStatus}
                 onEditTask={editTask}
-                onDeleteTask={deleteTask} />
+                onDeleteTask={deleteTask}
+                user={user} />
             </div>
             : null}
           {pendingTasks().length === tasks.length || doneTasks().length === tasks.length ? null :
@@ -41,7 +43,8 @@ const ListsContainer = ({ tasks, editTask,deleteTask, changeTaskStatus }) => {
                   tasksList={tasks}
                   onChangeTaskStatus={changeTaskStatus}
                   onEditTask={editTask} 
-                  onDeleteTask={deleteTask}/>
+                  onDeleteTask={deleteTask}
+                  user={user}/>
                 : <h3> No tienes tareas creadas </h3>}
             </div>
       }
